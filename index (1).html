@@ -1,0 +1,1515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mohamed ELsayed — Media Buyer & Performance Marketer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --black: #080808;
+    --white: #f5f2ed;
+    --red: #e8321a;
+    --red-dim: #b02810;
+    --gray-dark: #111111;
+    --gray-mid: #1c1c1c;
+    --gray-line: #2a2a2a;
+    --gray-text: #888;
+    --gray-muted: #555;
+    --accent: #e8321a;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ─── NOISE OVERLAY ─── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.4;
+  }
+
+  /* ─── SCROLLBAR ─── */
+  ::-webkit-scrollbar { width: 3px; }
+  ::-webkit-scrollbar-track { background: var(--black); }
+  ::-webkit-scrollbar-thumb { background: var(--red); }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 48px;
+    background: rgba(8,8,8,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s;
+  }
+  nav.scrolled { border-color: var(--gray-line); }
+
+  .nav-logo {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 22px;
+    letter-spacing: 3px;
+    color: var(--white);
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--red); }
+
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+  .nav-links a {
+    color: var(--gray-text);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--white); }
+
+  .nav-cta {
+    background: var(--red);
+    color: var(--white) !important;
+    padding: 10px 24px;
+    border: none !important;
+    font-size: 12px !important;
+    letter-spacing: 2px !important;
+    transition: background 0.2s !important;
+  }
+  .nav-cta:hover { background: var(--red-dim) !important; color: var(--white) !important; }
+
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 4px;
+  }
+  .hamburger span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--white);
+    transition: all 0.3s;
+  }
+
+  /* ─── HERO ─── */
+  #hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-image-col {
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-image-col::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, transparent 60%, var(--black));
+  }
+  .hero-bg-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    filter: grayscale(100%) contrast(1.1);
+    transform: scale(1.05);
+    animation: imgReveal 1.8s cubic-bezier(0.16,1,0.3,1) forwards;
+  }
+
+  @keyframes imgReveal {
+    from { transform: scale(1.15); opacity: 0; }
+    to   { transform: scale(1.05); opacity: 1; }
+  }
+
+  /* Fallback gradient when no image */
+  .hero-placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(160deg, #1a1a1a 0%, #0d0d0d 100%);
+    display: flex;
+    align-items: flex-end;
+    padding: 60px;
+  }
+  .hero-initials {
+    font-family: 'Bebas Neue', cursive;
+    font-size: clamp(120px, 18vw, 220px);
+    line-height: 0.85;
+    color: #1f1f1f;
+    letter-spacing: -4px;
+  }
+
+  .hero-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 120px 72px 80px 60px;
+    position: relative;
+  }
+
+  .hero-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--red);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.3s ease forwards;
+  }
+
+  .hero-name {
+    font-family: 'Bebas Neue', cursive;
+    font-size: clamp(64px, 8vw, 110px);
+    line-height: 0.9;
+    letter-spacing: 2px;
+    margin-bottom: 28px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.5s ease forwards;
+  }
+  .hero-name em {
+    font-style: normal;
+    color: var(--red);
+  }
+
+  .hero-desc {
+    font-size: 15px;
+    color: var(--gray-text);
+    line-height: 1.8;
+    max-width: 420px;
+    margin-bottom: 48px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.7s ease forwards;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.9s ease forwards;
+  }
+
+  .btn-primary {
+    background: var(--red);
+    color: var(--white);
+    padding: 16px 36px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 2px solid var(--red);
+    transition: all 0.25s;
+    display: inline-block;
+  }
+  .btn-primary:hover {
+    background: transparent;
+    color: var(--red);
+  }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--white);
+    padding: 16px 36px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 2px solid var(--gray-line);
+    transition: all 0.25s;
+    display: inline-block;
+  }
+  .btn-ghost:hover {
+    border-color: var(--white);
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 48px;
+    margin-top: 64px;
+    padding-top: 48px;
+    border-top: 1px solid var(--gray-line);
+    opacity: 0;
+    animation: fadeUp 0.8s 1.1s ease forwards;
+  }
+  .hero-stat-num {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 42px;
+    color: var(--white);
+    line-height: 1;
+    letter-spacing: 1px;
+  }
+  .hero-stat-num span { color: var(--red); }
+  .hero-stat-label {
+    font-size: 11px;
+    color: var(--gray-muted);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-top: 4px;
+    font-family: 'Space Mono', monospace;
+  }
+
+  /* ─── SCROLL INDICATOR ─── */
+  .scroll-indicator {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: var(--gray-muted);
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-family: 'Space Mono', monospace;
+    animation: bounce 2s infinite;
+  }
+  .scroll-indicator::after {
+    content: '';
+    display: block;
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--red), transparent);
+  }
+  @keyframes bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(8px); }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ─── SECTION COMMONS ─── */
+  section { padding: 120px 0; }
+
+  .container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 48px;
+  }
+
+  .section-eyebrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--red);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .section-title {
+    font-family: 'Bebas Neue', cursive;
+    font-size: clamp(48px, 6vw, 80px);
+    line-height: 0.95;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+  }
+
+  .section-sub {
+    font-size: 15px;
+    color: var(--gray-text);
+    max-width: 520px;
+    line-height: 1.8;
+    margin-bottom: 64px;
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ─── TICKER BAND ─── */
+  .ticker-wrap {
+    overflow: hidden;
+    background: var(--red);
+    padding: 14px 0;
+    white-space: nowrap;
+  }
+  .ticker-inner {
+    display: inline-flex;
+    animation: ticker 22s linear infinite;
+  }
+  .ticker-item {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 18px;
+    letter-spacing: 4px;
+    color: var(--white);
+    padding: 0 32px;
+  }
+  .ticker-dot {
+    color: rgba(255,255,255,0.4);
+  }
+  @keyframes ticker {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  /* ─── ABOUT ─── */
+  #about { background: var(--gray-dark); }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 100px;
+    align-items: center;
+  }
+
+  .about-visual {
+    position: relative;
+  }
+  .about-img-frame {
+    position: relative;
+    aspect-ratio: 3/4;
+    overflow: hidden;
+    max-width: 380px;
+  }
+  .about-img-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    filter: grayscale(100%);
+    transition: filter 0.5s;
+  }
+  .about-img-frame:hover img { filter: grayscale(60%); }
+  .about-img-frame::before {
+    content: '';
+    position: absolute;
+    top: -16px; left: -16px;
+    right: 16px; bottom: 16px;
+    border: 1px solid var(--red);
+    z-index: 0;
+    pointer-events: none;
+  }
+  .about-img-frame::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(8,8,8,0.6) 0%, transparent 50%);
+  }
+
+  .about-badge {
+    position: absolute;
+    bottom: -20px; right: -20px;
+    background: var(--red);
+    padding: 20px 24px;
+    font-family: 'Bebas Neue', cursive;
+    font-size: 14px;
+    letter-spacing: 2px;
+    line-height: 1.4;
+    text-align: center;
+  }
+  .about-badge strong {
+    display: block;
+    font-size: 38px;
+    letter-spacing: 0;
+    line-height: 1;
+  }
+
+  .about-text p {
+    color: var(--gray-text);
+    line-height: 1.9;
+    margin-bottom: 20px;
+    font-size: 15px;
+  }
+
+  .about-pillars {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 40px;
+  }
+  .pillar {
+    border: 1px solid var(--gray-line);
+    padding: 20px;
+    transition: border-color 0.2s;
+  }
+  .pillar:hover { border-color: var(--red); }
+  .pillar-icon {
+    font-size: 20px;
+    margin-bottom: 8px;
+  }
+  .pillar-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--white);
+    margin-bottom: 4px;
+  }
+  .pillar-desc {
+    font-size: 12px;
+    color: var(--gray-muted);
+  }
+
+  /* ─── PLATFORMS / SKILLS ─── */
+  #skills { background: var(--black); }
+
+  .platforms-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+    margin-bottom: 80px;
+  }
+  .platform-card {
+    background: var(--gray-mid);
+    padding: 40px 32px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s;
+    cursor: default;
+  }
+  .platform-card::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--red);
+    transform: scaleX(0);
+    transition: transform 0.3s;
+    transform-origin: left;
+  }
+  .platform-card:hover { background: #1a1a1a; }
+  .platform-card:hover::before { transform: scaleX(1); }
+
+  .platform-icon {
+    font-size: 36px;
+    margin-bottom: 16px;
+    display: block;
+  }
+  .platform-name {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 24px;
+    letter-spacing: 2px;
+    color: var(--white);
+    margin-bottom: 6px;
+  }
+  .platform-note {
+    font-size: 12px;
+    color: var(--gray-muted);
+    font-family: 'Space Mono', monospace;
+  }
+
+  .skills-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+  .skill-block {
+    background: var(--gray-mid);
+    padding: 32px;
+    border-left: 3px solid transparent;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .skill-block:hover {
+    border-color: var(--red);
+    background: #161616;
+  }
+  .skill-block h4 {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 12px;
+  }
+  .skill-block p {
+    font-size: 13px;
+    color: var(--gray-text);
+    line-height: 1.7;
+  }
+
+  /* ─── NUMBERS / RESULTS ─── */
+  #results {
+    background: var(--red);
+    padding: 100px 0;
+  }
+  .results-header {
+    text-align: center;
+    margin-bottom: 80px;
+  }
+  .results-header .section-eyebrow { color: rgba(255,255,255,0.7); }
+  .results-header .section-title { color: var(--white); }
+
+  .numbers-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: rgba(255,255,255,0.15);
+  }
+  .number-card {
+    background: var(--red);
+    padding: 48px 36px;
+    text-align: center;
+    transition: background 0.2s;
+  }
+  .number-card:hover { background: #d12d17; }
+
+  .number-val {
+    font-family: 'Bebas Neue', cursive;
+    font-size: clamp(52px, 5vw, 72px);
+    line-height: 1;
+    color: var(--white);
+    letter-spacing: 2px;
+    display: block;
+    margin-bottom: 8px;
+  }
+  .number-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.65);
+  }
+
+  /* ─── CASE STUDIES ─── */
+  #cases { background: var(--gray-dark); }
+
+  .cases-grid {
+    display: grid;
+    gap: 2px;
+  }
+  .case-card {
+    background: var(--gray-mid);
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    align-items: center;
+    padding: 0;
+    overflow: hidden;
+    border: 1px solid transparent;
+    transition: border-color 0.3s, background 0.3s;
+    position: relative;
+  }
+  .case-card::after {
+    content: '→';
+    position: absolute;
+    right: 48px;
+    font-size: 24px;
+    color: var(--red);
+    opacity: 0;
+    transition: opacity 0.3s, right 0.3s;
+  }
+  .case-card:hover {
+    border-color: var(--gray-line);
+    background: #1a1a1a;
+  }
+  .case-card:hover::after {
+    opacity: 1;
+    right: 36px;
+  }
+
+  .case-num {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 80px;
+    color: var(--gray-line);
+    padding: 48px;
+    line-height: 1;
+    letter-spacing: -2px;
+    transition: color 0.3s;
+  }
+  .case-card:hover .case-num { color: #333; }
+
+  .case-main {
+    padding: 48px 32px;
+    border-left: 1px solid var(--gray-line);
+  }
+  .case-industry {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 10px;
+  }
+  .case-title {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 32px;
+    letter-spacing: 1px;
+    color: var(--white);
+    margin-bottom: 10px;
+  }
+  .case-desc {
+    font-size: 13px;
+    color: var(--gray-text);
+    line-height: 1.7;
+    max-width: 500px;
+  }
+
+  .case-metrics {
+    padding: 48px;
+    border-left: 1px solid var(--gray-line);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .metric-row { }
+  .metric-val {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 28px;
+    color: var(--white);
+    letter-spacing: 1px;
+    line-height: 1;
+  }
+  .metric-key {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--gray-muted);
+    margin-top: 2px;
+  }
+
+  /* ─── SERVICES ─── */
+  #services { background: var(--black); }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+  .service-card {
+    background: var(--gray-mid);
+    padding: 48px 40px;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s;
+  }
+  .service-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 40px; height: 3px;
+    background: var(--red);
+    transition: width 0.4s;
+  }
+  .service-card:hover { background: #181818; }
+  .service-card:hover::before { width: 100%; }
+
+  .service-num {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 64px;
+    color: var(--gray-line);
+    line-height: 1;
+    margin-bottom: 20px;
+  }
+  .service-name {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 26px;
+    letter-spacing: 1px;
+    color: var(--white);
+    margin-bottom: 16px;
+  }
+  .service-desc {
+    font-size: 13px;
+    color: var(--gray-text);
+    line-height: 1.8;
+  }
+  .service-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 24px;
+  }
+  .service-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1px;
+    color: var(--gray-muted);
+    border: 1px solid var(--gray-line);
+    padding: 4px 10px;
+    text-transform: uppercase;
+  }
+
+  /* ─── CONTACT ─── */
+  #contact {
+    background: var(--black);
+    padding: 160px 0;
+    position: relative;
+    overflow: hidden;
+  }
+  #contact::before {
+    content: 'LET\'S WORK';
+    font-family: 'Bebas Neue', cursive;
+    font-size: clamp(100px, 16vw, 220px);
+    color: #0f0f0f;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
+    pointer-events: none;
+    letter-spacing: 4px;
+  }
+
+  .contact-inner {
+    position: relative;
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  .contact-inner .section-title {
+    font-size: clamp(52px, 8vw, 96px);
+    margin-bottom: 24px;
+  }
+  .contact-inner .section-sub {
+    margin: 0 auto 48px;
+    text-align: center;
+  }
+
+  .contact-actions {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 72px;
+  }
+
+  .contact-info {
+    display: flex;
+    justify-content: center;
+    gap: 48px;
+    flex-wrap: wrap;
+  }
+  .contact-item {
+    text-align: center;
+  }
+  .contact-item-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gray-muted);
+    margin-bottom: 6px;
+  }
+  .contact-item-val {
+    font-size: 14px;
+    color: var(--white);
+    font-weight: 500;
+  }
+  .contact-item-val a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .contact-item-val a:hover { color: var(--red); }
+
+  /* ─── FOOTER ─── */
+  footer {
+    border-top: 1px solid var(--gray-line);
+    padding: 32px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .footer-logo {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 18px;
+    letter-spacing: 3px;
+    color: var(--gray-muted);
+  }
+  .footer-logo span { color: var(--red); }
+  .footer-copy {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--gray-muted);
+    letter-spacing: 1px;
+  }
+  .footer-socials {
+    display: flex;
+    gap: 20px;
+  }
+  .footer-socials a {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--gray-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-socials a:hover { color: var(--red); }
+
+  /* ─── MOBILE NAV ─── */
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: var(--black);
+    z-index: 99;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 48px;
+    letter-spacing: 4px;
+    color: var(--white);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .mobile-menu a:hover { color: var(--red); }
+  .mobile-close {
+    position: absolute;
+    top: 28px; right: 40px;
+    background: none;
+    border: none;
+    color: var(--white);
+    font-size: 28px;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 1024px) {
+    #hero { grid-template-columns: 1fr; }
+    .hero-image-col { display: none; }
+    .hero-content { padding: 140px 48px 80px; min-height: 100vh; }
+    .about-grid { grid-template-columns: 1fr; gap: 60px; }
+    .about-img-frame { max-width: 320px; }
+    .platforms-grid { grid-template-columns: repeat(2, 1fr); }
+    .numbers-grid { grid-template-columns: repeat(2, 1fr); }
+    .skills-row { grid-template-columns: 1fr 1fr; }
+    .case-card { grid-template-columns: 1fr; }
+    .case-num { display: none; }
+    .case-metrics { border-left: none; border-top: 1px solid var(--gray-line); padding: 32px 48px; flex-direction: row; flex-wrap: wrap; gap: 24px; }
+    .services-grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  @media (max-width: 768px) {
+    nav { padding: 20px 24px; }
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    .container { padding: 0 24px; }
+    section { padding: 80px 0; }
+    .hero-content { padding: 120px 24px 80px; }
+    .hero-stats { gap: 28px; flex-wrap: wrap; }
+    .platforms-grid { grid-template-columns: 1fr 1fr; }
+    .numbers-grid { grid-template-columns: 1fr 1fr; }
+    .skills-row { grid-template-columns: 1fr; }
+    .services-grid { grid-template-columns: 1fr; }
+    .case-main { padding: 32px 24px; }
+    footer { flex-direction: column; gap: 16px; text-align: center; }
+    #contact::before { font-size: 60px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#hero" class="nav-logo">M<span>.</span>ELSAYED</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#results">Results</a></li>
+    <li><a href="#cases">Case Studies</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#contact" class="nav-cta">Hire Me</a></li>
+  </ul>
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" onclick="toggleMenu()">✕</button>
+  <a href="#about" onclick="toggleMenu()">About</a>
+  <a href="#skills" onclick="toggleMenu()">Skills</a>
+  <a href="#results" onclick="toggleMenu()">Results</a>
+  <a href="#cases" onclick="toggleMenu()">Cases</a>
+  <a href="#services" onclick="toggleMenu()">Services</a>
+  <a href="#contact" onclick="toggleMenu()">Contact</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-image-col">
+    <div class="hero-placeholder">
+      <div class="hero-initials">ME</div>
+    </div>
+  </div>
+
+  <div class="hero-content">
+    <p class="hero-tag">// Media Buyer · Performance Marketer</p>
+    <h1 class="hero-name">
+      Mohamed<br><em>ELsayed</em>
+    </h1>
+    <p class="hero-desc">
+      I turn ad budgets into revenue machines. 3+ years of data-driven campaigns on Facebook, TikTok, Instagram & Snapchat — delivering ROAS that brands actually remember.
+    </p>
+    <div class="hero-actions">
+      <a href="#cases" class="btn-primary">See My Results</a>
+      <a href="#contact" class="btn-ghost">Work With Me</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="hero-stat-num">15<span>.4×</span></div>
+        <div class="hero-stat-label">Peak ROAS</div>
+      </div>
+      <div>
+        <div class="hero-stat-num">5<span>M+</span></div>
+        <div class="hero-stat-label">EGP Revenue</div>
+      </div>
+      <div>
+        <div class="hero-stat-num">3<span>+</span></div>
+        <div class="hero-stat-label">Years Exp.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-indicator">Scroll</div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker-wrap" aria-hidden="true">
+  <div class="ticker-inner">
+    <span class="ticker-item">Facebook Ads</span><span class="ticker-dot">✦</span>
+    <span class="ticker-item">TikTok Ads</span><span class="ticker-dot">✦</span>
+    <span class="ticker-item">Instagram Ads</span><span class="ticker-dot">✦</span>
+    <span class="ticker-item">Snapchat Ads</span><span class="ticker-dot">✦</span>
+    <span class="ticker-item">E-Commerce Scale</span><span class="ticker-dot">✦</span>
+    <span class="ticker-item">ROAS Optimization</span><span class="ticker-dot">✦</span>
+    <span class="ticker-item">Landing Page CRO</span><span class="ticker-dot">✦</span>
+    <span class="ticker-item">Data-Driven Strategy</span><span class="ticker-dot">✦</span>
+    <!-- duplicate for seamless loop -->
+    <span class="ticker-item">Facebook Ads</span><span class="ticker-dot">✦</span>
+    <span class="ticker-item">TikTok Ads</span><span class="ticker-dot">✦</span>
+    <span class="ticker-item">Instagram Ads</span><span class="ticker-dot">✦</span>
+    <span class="ticker-item">Snapchat Ads</span><span class="ticker-dot">✦</span>
+    <span class="ticker-item">E-Commerce Scale</span><span class="ticker-dot">✦</span>
+    <span class="ticker-item">ROAS Optimization</span><span class="ticker-dot">✦</span>
+    <span class="ticker-item">Landing Page CRO</span><span class="ticker-dot">✦</span>
+    <span class="ticker-item">Data-Driven Strategy</span><span class="ticker-dot">✦</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-visual reveal">
+        <div class="about-img-frame">
+          <div style="width:100%;height:100%;background:linear-gradient(160deg,#1a1a1a,#0a0a0a);display:flex;align-items:center;justify-content:center;">
+            <span style="font-family:'Bebas Neue',cursive;font-size:120px;color:#222;letter-spacing:-4px;">ME</span>
+          </div>
+        </div>
+        <div class="about-badge">
+          <strong>3+</strong>
+          YEARS<br>EXPERIENCE
+        </div>
+      </div>
+
+      <div class="about-text reveal" style="transition-delay:0.15s">
+        <p class="section-eyebrow">About Me</p>
+        <h2 class="section-title">Built for<br>Results</h2>
+        <p>I'm Mohamed ELsayed — a performance marketer and media buyer specializing in paid social. I don't just run ads; I architect revenue systems that scale.</p>
+        <p>With 3+ years managing campaigns across Facebook, Instagram, TikTok, and Snapchat, I've worked with startups and established brands alike — helping them turn ad spend into predictable, profitable growth through data-driven strategies and creative optimization.</p>
+        <p>My approach combines sharp audience targeting, aggressive creative testing, and relentless optimization — always focused on the metrics that move businesses forward: ROAS, CPL, and real revenue.</p>
+
+        <div class="about-pillars">
+          <div class="pillar">
+            <div class="pillar-icon">📊</div>
+            <div class="pillar-title">Data-Driven</div>
+            <div class="pillar-desc">Every decision backed by real numbers</div>
+          </div>
+          <div class="pillar">
+            <div class="pillar-icon">🎯</div>
+            <div class="pillar-title">Precision Targeting</div>
+            <div class="pillar-desc">Right message, right audience, right time</div>
+          </div>
+          <div class="pillar">
+            <div class="pillar-icon">⚡</div>
+            <div class="pillar-title">Rapid Iteration</div>
+            <div class="pillar-desc">Fast creative testing & scaling winners</div>
+          </div>
+          <div class="pillar">
+            <div class="pillar-icon">📈</div>
+            <div class="pillar-title">Scale Focus</div>
+            <div class="pillar-desc">Built to grow — not just maintain</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="container">
+    <p class="section-eyebrow reveal">Platforms & Expertise</p>
+    <h2 class="section-title reveal">Where I<br>Operate</h2>
+    <p class="section-sub reveal">Multi-platform mastery across the full paid social ecosystem.</p>
+
+    <div class="platforms-grid reveal">
+      <div class="platform-card">
+        <span class="platform-icon">📘</span>
+        <div class="platform-name">Facebook Ads</div>
+        <div class="platform-note">Primary Platform</div>
+      </div>
+      <div class="platform-card">
+        <span class="platform-icon">🎵</span>
+        <div class="platform-name">TikTok Ads</div>
+        <div class="platform-note">High ROAS Campaigns</div>
+      </div>
+      <div class="platform-card">
+        <span class="platform-icon">📸</span>
+        <div class="platform-name">Instagram Ads</div>
+        <div class="platform-note">Visual Commerce</div>
+      </div>
+      <div class="platform-card">
+        <span class="platform-icon">👻</span>
+        <div class="platform-name">Snapchat Ads</div>
+        <div class="platform-note">Story-Driven Reach</div>
+      </div>
+    </div>
+
+    <div class="skills-row reveal">
+      <div class="skill-block">
+        <h4>Campaign Strategy</h4>
+        <p>Full-funnel architecture — TOFU awareness to BOFU conversion campaigns designed to maximize efficiency at every stage.</p>
+      </div>
+      <div class="skill-block">
+        <h4>Creative Testing</h4>
+        <p>Systematic A/B testing of creatives, hooks, and copy to identify winning ads and kill losers fast — before they drain budget.</p>
+      </div>
+      <div class="skill-block">
+        <h4>Budget Scaling</h4>
+        <p>Proven frameworks for scaling from EGP 5K to EGP 500K+ without breaking ROAS — horizontal and vertical scaling strategies.</p>
+      </div>
+      <div class="skill-block">
+        <h4>Landing Page CRO</h4>
+        <p>Shopify & Easy Order optimization to maximize conversion rates and ensure traffic converts into actual purchases.</p>
+      </div>
+      <div class="skill-block">
+        <h4>Audience Research</h4>
+        <p>Deep segmentation using Lookalike Audiences, interest layering, and behavioral targeting to find high-value buyers.</p>
+      </div>
+      <div class="skill-block">
+        <h4>Analytics & Reporting</h4>
+        <p>Full performance reporting with actionable insights — tracking ROAS, CPM, CTR, CPL, and revenue attribution across platforms.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESULTS -->
+<section id="results">
+  <div class="container">
+    <div class="results-header">
+      <p class="section-eyebrow">By The Numbers</p>
+      <h2 class="section-title reveal" style="color:var(--white)">Real Numbers.<br>Real Revenue.</h2>
+    </div>
+    <div class="numbers-grid reveal">
+      <div class="number-card">
+        <span class="number-val">15.4×</span>
+        <div class="number-label">Peak ROAS Achieved</div>
+      </div>
+      <div class="number-card">
+        <span class="number-val">5M+</span>
+        <div class="number-label">EGP Revenue Generated</div>
+      </div>
+      <div class="number-card">
+        <span class="number-val">EGP 2.3M</span>
+        <div class="number-label">Sales in 2.5 Months</div>
+      </div>
+      <div class="number-card">
+        <span class="number-val">£174K</span>
+        <div class="number-label">Black Friday (4 Days)</div>
+      </div>
+      <div class="number-card">
+        <span class="number-val">699%</span>
+        <div class="number-label">Sales Growth (T-Brand)</div>
+      </div>
+      <div class="number-card">
+        <span class="number-val">4,505</span>
+        <div class="number-label">Orders (556% Growth)</div>
+      </div>
+      <div class="number-card">
+        <span class="number-val">263</span>
+        <div class="number-label">Leads @ EGP 35/Lead</div>
+      </div>
+      <div class="number-card">
+        <span class="number-val">13.33×</span>
+        <div class="number-label">TikTok ROAS (Fashion)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CASE STUDIES -->
+<section id="cases">
+  <div class="container">
+    <p class="section-eyebrow reveal">Case Studies</p>
+    <h2 class="section-title reveal">Campaigns That<br>Delivered</h2>
+    <p class="section-sub reveal">Real campaigns. Real results. No fluff — just proof.</p>
+
+    <div class="cases-grid">
+
+      <!-- Case 1 -->
+      <div class="case-card reveal">
+        <div class="case-num">01</div>
+        <div class="case-main">
+          <div class="case-industry">Fashion · Modest Wear · Facebook Ads</div>
+          <div class="case-title">EGP 2.3M in 2.5 Months for Hijab Fashion Brand</div>
+          <p class="case-desc">Scaled a modest fashion brand from scratch using aggressive Facebook catalog campaigns and creative rotation. Hit 1,190 total orders and EGP 755K in the final month alone, proving sustained scalability — not a one-time spike.</p>
+        </div>
+        <div class="case-metrics">
+          <div class="metric-row">
+            <div class="metric-val">EGP 2.3M</div>
+            <div class="metric-key">Total Sales</div>
+          </div>
+          <div class="metric-row">
+            <div class="metric-val">1,190</div>
+            <div class="metric-key">Total Orders</div>
+          </div>
+          <div class="metric-row">
+            <div class="metric-val">2 Months</div>
+            <div class="metric-key">Timeframe</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Case 2 -->
+      <div class="case-card reveal" style="transition-delay:0.1s">
+        <div class="case-num">02</div>
+        <div class="case-main">
+          <div class="case-industry">Fashion · E-Commerce · Black Friday</div>
+          <div class="case-title">£174K Revenue in 4 Days — Black Friday Domination</div>
+          <p class="case-desc">Designed and executed a Black Friday blitz strategy for a UK-market fashion brand. With a CPM of just 70 and a ROAS of 15.4, this campaign set a new benchmark for peak-season performance. The single best 4-day window in the brand's history.</p>
+        </div>
+        <div class="case-metrics">
+          <div class="metric-row">
+            <div class="metric-val">15.4×</div>
+            <div class="metric-key">ROAS</div>
+          </div>
+          <div class="metric-row">
+            <div class="metric-val">£174K</div>
+            <div class="metric-key">Revenue (4 Days)</div>
+          </div>
+          <div class="metric-row">
+            <div class="metric-val">70 EGP</div>
+            <div class="metric-key">CPM</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Case 3 -->
+      <div class="case-card reveal" style="transition-delay:0.2s">
+        <div class="case-num">03</div>
+        <div class="case-main">
+          <div class="case-industry">Fashion · TikTok Ads · Egypt Market</div>
+          <div class="case-title">763K EGP Sales on TikTok — 13.33× ROAS</div>
+          <p class="case-desc">Ran a month-long TikTok Ads campaign targeting the Egyptian fashion market. With 715 completed payments, a CTR of 4.75%, and 106K clicks — this campaign proved TikTok's massive potential for fashion e-commerce in MENA when executed correctly.</p>
+        </div>
+        <div class="case-metrics">
+          <div class="metric-row">
+            <div class="metric-val">13.33×</div>
+            <div class="metric-key">ROAS</div>
+          </div>
+          <div class="metric-row">
+            <div class="metric-val">EGP 763K</div>
+            <div class="metric-key">Sales</div>
+          </div>
+          <div class="metric-row">
+            <div class="metric-val">4.75%</div>
+            <div class="metric-key">CTR</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Case 4 -->
+      <div class="case-card reveal" style="transition-delay:0.3s">
+        <div class="case-num">04</div>
+        <div class="case-main">
+          <div class="case-industry">Fashion · T-Brand · Long-Term Scale</div>
+          <div class="case-title">EGP 5M Revenue — 699% Sales Growth</div>
+          <p class="case-desc">Managed a major fashion brand (Tetiano/T-brand) over 5+ months with 169+ campaigns. Generated EGP 4.99M in purchases from 4,408 orders — a 699% revenue increase and 556% order growth compared to the prior period. Full-funnel strategy across Facebook and Instagram.</p>
+        </div>
+        <div class="case-metrics">
+          <div class="metric-row">
+            <div class="metric-val">EGP 5M</div>
+            <div class="metric-key">Revenue</div>
+          </div>
+          <div class="metric-row">
+            <div class="metric-val">+699%</div>
+            <div class="metric-key">Sales Growth</div>
+          </div>
+          <div class="metric-row">
+            <div class="metric-val">4,408</div>
+            <div class="metric-key">Orders</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Case 5 -->
+      <div class="case-card reveal" style="transition-delay:0.4s">
+        <div class="case-num">05</div>
+        <div class="case-main">
+          <div class="case-industry">Interior Design · Lead Generation · Facebook</div>
+          <div class="case-title">263 Qualified Leads at EGP 35.55/Lead for Finishing Co.</div>
+          <p class="case-desc">Built a lead generation machine for an interior finishing company using BOFU-focused Facebook campaigns (messaging objective). With just EGP 9,348 spent, delivered 263 warm leads — resulting in 2 direct contracts signed and 10+ highly interested prospects in the pipeline.</p>
+        </div>
+        <div class="case-metrics">
+          <div class="metric-row">
+            <div class="metric-val">263</div>
+            <div class="metric-key">Leads Generated</div>
+          </div>
+          <div class="metric-row">
+            <div class="metric-val">EGP 35.55</div>
+            <div class="metric-key">Cost Per Lead</div>
+          </div>
+          <div class="metric-row">
+            <div class="metric-val">2+</div>
+            <div class="metric-key">Contracts Closed</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Case 6 -->
+      <div class="case-card reveal" style="transition-delay:0.5s">
+        <div class="case-num">06</div>
+        <div class="case-main">
+          <div class="case-industry">Wellness · E-Commerce · Facebook Ads</div>
+          <div class="case-title">513 Purchases at 3.95–5.25× ROAS — Wellness Product</div>
+          <p class="case-desc">Managed a wellness product brand (K) across 40 campaigns with consistent ROAS between 3.95–5.25. Tested LAL audiences, retargeting MIX strategies, and creative variations to find the winning combinations, generating EGP 63K revenue from a EGP 63K budget.</p>
+        </div>
+        <div class="case-metrics">
+          <div class="metric-row">
+            <div class="metric-val">5.25×</div>
+            <div class="metric-key">Peak ROAS</div>
+          </div>
+          <div class="metric-row">
+            <div class="metric-val">513</div>
+            <div class="metric-key">Purchases</div>
+          </div>
+          <div class="metric-row">
+            <div class="metric-val">40</div>
+            <div class="metric-key">Campaigns Run</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="container">
+    <p class="section-eyebrow reveal">What I Offer</p>
+    <h2 class="section-title reveal">Services Built<br>to Scale</h2>
+    <p class="section-sub reveal">End-to-end performance marketing — from strategy to execution to optimization.</p>
+
+    <div class="services-grid">
+      <div class="service-card reveal">
+        <div class="service-num">01</div>
+        <div class="service-name">Paid Social Campaigns</div>
+        <p class="service-desc">Full campaign management across Facebook, Instagram, TikTok, and Snapchat. From account setup and pixel configuration to creative strategy and daily optimization.</p>
+        <div class="service-tags">
+          <span class="service-tag">Facebook</span>
+          <span class="service-tag">TikTok</span>
+          <span class="service-tag">Instagram</span>
+          <span class="service-tag">Snapchat</span>
+        </div>
+      </div>
+      <div class="service-card reveal" style="transition-delay:0.1s">
+        <div class="service-num">02</div>
+        <div class="service-name">E-Commerce Growth</div>
+        <p class="service-desc">Scale your Shopify or Easy Order store with performance-focused ad strategies. Catalog ads, dynamic retargeting, and purchase-optimized campaigns built to maximize revenue per EGP spent.</p>
+        <div class="service-tags">
+          <span class="service-tag">Shopify</span>
+          <span class="service-tag">Easy Order</span>
+          <span class="service-tag">Catalog Ads</span>
+        </div>
+      </div>
+      <div class="service-card reveal" style="transition-delay:0.2s">
+        <div class="service-num">03</div>
+        <div class="service-name">Lead Generation</div>
+        <p class="service-desc">BOFU lead campaigns designed for service businesses and high-ticket industries. Messaging campaigns, lead forms, and landing page strategies to fill your pipeline with qualified prospects.</p>
+        <div class="service-tags">
+          <span class="service-tag">Lead Forms</span>
+          <span class="service-tag">Messaging</span>
+          <span class="service-tag">BOFU</span>
+        </div>
+      </div>
+      <div class="service-card reveal" style="transition-delay:0.3s">
+        <div class="service-num">04</div>
+        <div class="service-name">Campaign Audit & Fix</div>
+        <p class="service-desc">Have existing campaigns underperforming? I'll audit your ad account, diagnose what's wrong — audience issues, creative fatigue, budget waste — and deliver a concrete action plan to fix it.</p>
+        <div class="service-tags">
+          <span class="service-tag">Audit</span>
+          <span class="service-tag">Optimization</span>
+          <span class="service-tag">Strategy</span>
+        </div>
+      </div>
+      <div class="service-card reveal" style="transition-delay:0.4s">
+        <div class="service-num">05</div>
+        <div class="service-name">Creative Strategy</div>
+        <p class="service-desc">Systematic creative testing frameworks — hooks, formats, UGC, and visual styles — to identify what resonates with your audience and scale winning assets while killing losers fast.</p>
+        <div class="service-tags">
+          <span class="service-tag">A/B Testing</span>
+          <span class="service-tag">UGC</span>
+          <span class="service-tag">Hook Testing</span>
+        </div>
+      </div>
+      <div class="service-card reveal" style="transition-delay:0.5s">
+        <div class="service-num">06</div>
+        <div class="service-name">Scaling & Budget Management</div>
+        <p class="service-desc">Take campaigns from EGP 5K/month to EGP 500K+ without sacrificing ROAS. Proven vertical and horizontal scaling strategies with budget allocation frameworks that protect profitability.</p>
+        <div class="service-tags">
+          <span class="service-tag">Budget Scale</span>
+          <span class="service-tag">ROAS</span>
+          <span class="service-tag">ROI</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-inner">
+      <p class="section-eyebrow reveal">Ready to Scale?</p>
+      <h2 class="section-title reveal">Let's Build<br>Something<br><em style="font-style:normal;color:var(--red)">Big.</em></h2>
+      <p class="section-sub reveal">If you're looking for a media buyer who delivers results — not reports — let's talk. I work with brands that are serious about growth.</p>
+      <div class="contact-actions reveal">
+        <a href="mailto:mohamadelsayed0099@gmail.com" class="btn-primary">Send Me a Message</a>
+        <a href="https://wa.me/201XXXXXXXXX" class="btn-ghost" target="_blank">WhatsApp Me</a>
+      </div>
+      <div class="contact-info reveal">
+        <div class="contact-item">
+          <div class="contact-item-label">Email</div>
+          <div class="contact-item-val">
+            <a href="mailto:mohamadelsayed0099@gmail.com">mohamadelsayed0099@gmail.com</a>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-label">Location</div>
+          <div class="contact-item-val">Egypt · Available Worldwide</div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-label">Availability</div>
+          <div class="contact-item-val" style="color:var(--red)">● Open to Projects</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">M<span>.</span>ELSAYED</div>
+  <div class="footer-copy">© 2026 Mohamed ELsayed — All rights reserved</div>
+  <div class="footer-socials">
+    <a href="#">LinkedIn</a>
+    <a href="#">Facebook</a>
+    <a href="#">TikTok</a>
+  </div>
+</footer>
+
+<script>
+  // NAV SCROLL
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  // MOBILE MENU
+  function toggleMenu() {
+    document.getElementById('mobileMenu').classList.toggle('open');
+  }
+
+  // REVEAL ON SCROLL
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+
+  // COUNTER ANIMATION
+  function animateCounter(el, target, suffix = '') {
+    const duration = 1800;
+    const start = performance.now();
+    const isDecimal = String(target).includes('.');
+    const update = (time) => {
+      const elapsed = Math.min((time - start) / duration, 1);
+      const ease = 1 - Math.pow(1 - elapsed, 4);
+      const current = isDecimal
+        ? (target * ease).toFixed(2)
+        : Math.floor(target * ease).toLocaleString();
+      el.textContent = current + suffix;
+      if (elapsed < 1) requestAnimationFrame(update);
+    };
+    requestAnimationFrame(update);
+  }
+
+  // Trigger counters when results section visible
+  let countersStarted = false;
+  const resultsSection = document.getElementById('results');
+  const counterObserver = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting && !countersStarted) {
+      countersStarted = true;
+      // Hero stats
+      document.querySelectorAll('.hero-stat-num').forEach(el => {
+        el.style.opacity = 1;
+      });
+    }
+  }, { threshold: 0.3 });
+  counterObserver.observe(resultsSection);
+</script>
+
+</body>
+</html>
