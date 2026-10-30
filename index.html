@@ -48,7 +48,26 @@
 
     html {
       scroll-behavior: smooth;
+      scroll-padding-top: 80px; /* keep anchored headings clear of the fixed navbar */
       color-scheme: dark;
+    }
+
+    h1, h2, h3 {
+      text-wrap: balance;
+    }
+    p {
+      text-wrap: pretty;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    /* ── KEYBOARD FOCUS ── */
+    :focus-visible {
+      outline: 2px solid var(--accent-red);
+      outline-offset: 3px;
     }
 
     body {
@@ -172,6 +191,10 @@
       color: #ffffff;
       border: 2px solid var(--accent-red);
     }
+    .btn:active {
+      transform: translateY(0) scale(0.98);
+    }
+
     .btn-red:hover {
       background: transparent;
       color: var(--accent-red);
@@ -330,12 +353,12 @@
       transform: translateY(-8px) rotate(-45deg);
     }
 
-    /* Mobile Menu Fullscreen Overlay */
+    /* Mobile Menu Fullscreen Overlay — sits under the navbar so the close (X) button stays reachable */
     .mobile-menu {
       position: fixed;
       inset: 0;
       background: rgba(8, 8, 8, 0.98);
-      z-index: 1050;
+      z-index: 999;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -584,6 +607,9 @@
       position: relative;
       z-index: 20;
       box-shadow: 0 0 35px rgba(232, 50, 26, 0.35);
+    }
+    .ticker-band:hover .ticker-track {
+      animation-play-state: paused;
     }
     .ticker-track {
       display: inline-flex;
@@ -998,7 +1024,7 @@
     }
     .brand-name {
       font-family: var(--font-display);
-      font-size: 32px;
+      font-size: clamp(24px, 3vw, 32px);
       letter-spacing: 1.5px;
       color: var(--text-primary);
       text-transform: uppercase;
@@ -1008,6 +1034,7 @@
     .brand-tags {
       display: flex;
       align-items: center;
+      flex-wrap: wrap;
       gap: 10px;
     }
     .tag {
@@ -1515,6 +1542,7 @@
       font-size: 14.5px;
       color: var(--text-primary);
       font-weight: 500;
+      overflow-wrap: anywhere; /* long email must not overflow on phones */
     }
     .info-val a {
       color: inherit;
@@ -1727,7 +1755,8 @@
       .case-row-card {
         grid-template-columns: 1fr;
       }
-      .case-row-num {
+      .case-row-num,
+      .case-row-card::after {
         display: none;
       }
       .case-row-metrics {
@@ -1780,10 +1809,16 @@
         font-size: clamp(54px, 14vw, 84px);
       }
       .hero-stats-bar {
-        grid-template-columns: 1fr;
-        gap: 24px;
+        gap: 16px;
         margin-top: 48px;
-        padding-top: 36px;
+        padding-top: 32px;
+      }
+      .hero-stat-value {
+        font-size: clamp(26px, 7vw, 38px);
+      }
+      .hero-stat-label {
+        font-size: 9.5px;
+        letter-spacing: 1px;
       }
 
       .about-pillars {
@@ -1864,6 +1899,37 @@
       }
       .contact-cta-row .btn {
         width: 100%;
+      }
+      .brand-logo-item {
+        min-width: calc(50% - 10px);
+      }
+    }
+
+    /* Respect users who turn off animations in their OS settings */
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+      .reveal {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    /* No sticky hover lifts on touch screens */
+    @media (hover: none) {
+      .pillar-card:hover,
+      .platform-card:hover,
+      .skill-card:hover,
+      .case-row-card:hover,
+      .service-card:hover,
+      .brand-logo-item:hover {
+        transform: none;
       }
     }
   </style>
